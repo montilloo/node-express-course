@@ -19,8 +19,17 @@ const createTask = async (req, res) => {
 	}
 }
 
-const getTask = (req, res) => {
-	res.send('get Task');
+const getTask = async (req, res) => {
+	try {
+		const {id: taskID } = req.params;
+		const task = await Task.findOne({_id: taskID});
+		if(!task) {
+			return res.status(404).json({msg: `${taskID}的任务不存在`});
+		}
+		res.stats(200).json({task});
+	} catch(error) {
+		res.status(500).json({msg: error});
+	}
 }
 
 const updateTask = (req, res) => {
