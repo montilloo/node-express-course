@@ -4,6 +4,7 @@ const app = express();
 const tasks = require('./routes/tasks');
 const { connectDB } = require('./db/connection');
 const notFound = require('./middleware/not-found');
+const errorHandler = require('./middleware/error-handler');
 // middleware
 app.use(express.json());
 
@@ -14,7 +15,7 @@ app.get('/hello', (req, res) => {
 
 app.use('/api/v1/tasks', tasks);
 app.use(notFound);
-
+app.use(errorHandler);
 const port = 3000;
 
 const start = async () => {
